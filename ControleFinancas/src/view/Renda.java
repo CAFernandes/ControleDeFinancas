@@ -46,6 +46,7 @@ public class Renda extends JFrame {
 		contentPane.add(lblControleDeFinanas);
 
 		txtRenda = new JTextField();
+		txtRenda.setToolTipText("Informe sua renda.");
 		txtRenda.setBounds(76, 81, 89, 20);
 		contentPane.add(txtRenda);
 		txtRenda.setColumns(10);
@@ -64,6 +65,8 @@ public class Renda extends JFrame {
 
 		txtData = new JTextField();
 		txtData.setEditable(false);
+		txtData.setEnabled(false);
+		txtData.setToolTipText("Data gerada automaticamente pelo sistema");
 		txtData.setBounds(309, 81, 115, 20);
 		contentPane.add(txtData);
 		txtData.setColumns(10);
@@ -75,6 +78,7 @@ public class Renda extends JFrame {
 		}
 		
 		JTextPane txtDesc = new JTextPane();
+		txtDesc.setToolTipText("Adicione uma descrição para recordar da sua renda futuramente.");
 		txtDesc.setBounds(76, 112, 348, 99);
 		contentPane.add(txtDesc);
 

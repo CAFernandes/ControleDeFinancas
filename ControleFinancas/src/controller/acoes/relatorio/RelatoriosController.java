@@ -44,6 +44,7 @@ public class RelatoriosController {
 	public void tableDespesa() {
 		if(table != null) {
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
+//			System.out.println(model.getColumnCount());
 			if(model.getRowCount()>0) {
 				model.setRowCount(0);
 			}
@@ -51,10 +52,12 @@ public class RelatoriosController {
 				RelatorioDao rDao = new RelatorioDao();
 				List<Despesa> listDespesa = rDao.GerarRelatorioDespesa();
 				for (Despesa despesa : listDespesa) {
-					Object[] linha = new Object[3];
+					Object[] linha = new Object[5];
 					linha[0] = despesa.getValor();
 					linha[1] = despesa.getDescricao();
 					linha[2] = despesa.getData();
+					linha[3] = despesa.getParcela() > 0 ? despesa.getParcela() : 0;
+					linha[4] = despesa.getParcela() > 0 ? despesa.getValor()/despesa.getParcela() : 0;
 					model.addRow(linha);
 				}
 			} catch (ClassNotFoundException | SQLException e) {

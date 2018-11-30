@@ -1,8 +1,9 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.Back;
@@ -25,6 +27,8 @@ public class Despesa extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtDespesa;
 	private JTextField txtData;
+	private JTextField txtParcelas;
+	private JTextField txtTotal;
 
 	/**
 	 * Create the frame.
@@ -45,25 +49,59 @@ public class Despesa extends JFrame {
 		contentPane.add(lblControleDeFinanas);
 
 		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o :");
-		lblDescrio.setBounds(10, 108, 65, 14);
+		lblDescrio.setBounds(10, 121, 65, 14);
 		contentPane.add(lblDescrio);
 
 		JLabel lblDespesa = new JLabel("Despesa :");
-		lblDespesa.setBounds(10, 84, 65, 17);
+		lblDespesa.setBounds(10, 59, 65, 17);
 		contentPane.add(lblDespesa);
 
 		JLabel lblData = new JLabel("Data :");
-		lblData.setBounds(253, 84, 46, 14);
+		lblData.setBounds(203, 60, 46, 14);
 		contentPane.add(lblData);
+		
+		JLabel lblParcela = new JLabel("Parcelas:");
+		lblParcela.setBounds(10, 96, 65, 14);
+		contentPane.add(lblParcela);
+		
+		JLabel lblTotalParcelas = new JLabel("Total Parcelas:");
+		lblTotalParcelas.setBounds(203, 96, 109, 14);
+		contentPane.add(lblTotalParcelas);
 
+		
 		txtDespesa = new JTextField();
-		txtDespesa.setBounds(76, 81, 89, 20);
+		txtDespesa.setToolTipText("Neste campo informe a sua despesa");
+		txtDespesa.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDespesa.setBounds(76, 62, 119, 20);
+		txtDespesa.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				int parcela = txtParcelas.getText().isEmpty() ?  1 : Integer.parseInt(txtParcelas.getText());
+				txtTotal.setText(String.valueOf(parcela == 1 ? txtDespesa.getText(): Float.parseFloat(txtDespesa.getText())/parcela ));
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+			}
+		});
 		contentPane.add(txtDespesa);
 		txtDespesa.setColumns(10);
 
 		txtData = new JTextField();
+		txtData.setToolTipText("Data gerada automaticamente pelo sistema");
+		txtData.setForeground(Color.CYAN);
+		txtData.setHorizontalAlignment(SwingConstants.CENTER);
+		txtData.setEnabled(false);
 		txtData.setEditable(false);
-		txtData.setBounds(309, 81, 115, 20);
+		txtData.setBounds(259, 62, 165, 20);
 		contentPane.add(txtData);
 		txtData.setColumns(10);
 		try {
@@ -73,8 +111,44 @@ public class Despesa extends JFrame {
 			e.printStackTrace();
 		}
 		
+		txtParcelas = new JTextField();
+		txtParcelas.setToolTipText("Em quantas vezes ser\u00E1 feito o pagamento");
+		txtParcelas.setHorizontalAlignment(SwingConstants.CENTER);
+		txtParcelas.setBounds(76, 93, 119, 20);
+		txtParcelas.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				
+
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				int parcela = txtParcelas.getText().isEmpty() ?  1 : Integer.parseInt(txtParcelas.getText());
+				txtTotal.setText(String.valueOf(txtDespesa.getText().isEmpty() ? 0
+						: Float.parseFloat(txtDespesa.getText())/parcela));
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+			}
+		});
+		contentPane.add(txtParcelas);
+		txtParcelas.setColumns(10);
+		
+		txtTotal = new JTextField();
+		txtTotal.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTotal.setEnabled(false);
+		txtTotal.setEditable(false);
+		txtTotal.setBounds(309, 90, 115, 20);
+		contentPane.add(txtTotal);
+		txtTotal.setColumns(10);
+		
 		JTextPane txtDesc = new JTextPane();
-		txtDesc.setBounds(76, 112, 348, 99);
+		txtDesc.setToolTipText("Adicione uma descri\u00E7\u00E3o para relembrar sua Despesa");
+		txtDesc.setBounds(76, 121, 348, 90);
 		contentPane.add(txtDesc);
 
 		JButton btnVoltar = new JButton("Voltar");
@@ -86,17 +160,22 @@ public class Despesa extends JFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(335, 227, 89, 23);
 		contentPane.add(btnSalvar);
-		btnSalvar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				SalvarDespesa sDespesa = new SalvarDespesa(txtDespesa, txtDesc, txtData, mController);
-				btnSalvar.addActionListener(sDespesa);
-			}
-		});
+		btnSalvar.addActionListener(new SalvarDespesa(txtDespesa, txtDesc, txtData, txtParcelas, mController));
+		
+//		JButton btnCalcularParcelas = new JButton("Calcular Parcelas");
+//		btnCalcularParcelas.setBounds(183, 227, 137, 23);
+//		btnCalcularParcelas.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				int parcela = txtParcelas.getText().isEmpty() ?  0 : Integer.parseInt(txtParcelas.getText());
+//				txtTotal.setText(String.valueOf(txtDespesa.getText().isEmpty() ? 1 
+//						: Integer.parseInt(txtDespesa.getText())/parcela));
+//			}
+//		});
+//		contentPane.add(btnCalcularParcelas);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 47, 434, 166);
 		contentPane.add(separator);
 	}
-
 }

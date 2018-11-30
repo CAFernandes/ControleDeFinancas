@@ -16,6 +16,7 @@ CREATE TABLE despesa
  valor FLOAT NOT NULL,
  data_despesa VARCHAR(10) NOT NULL,
  descricao VARCHAR(60),
+ parcela INT NOT NULL,
  PRIMARY KEY(id)
 )
 */
@@ -24,7 +25,7 @@ INSERT INTO renda VALUES
 (1138.69, '16/12/2017', 'Valor em conta')
 
 INSERT INTO despesa VALUES
-(179.21, '16/12/2017', 'NuBank')
+(379.21, '16/12/2017', 'NuBank', 2)
 
 SELECT * FROM despesa
 SELECT * FROM renda

@@ -14,14 +14,15 @@ import persistence.despesa.DespesaDao;
 
 public class SalvarDespesa implements ActionListener {
 
-	JTextField txtDespesa, txtData;
+	JTextField txtDespesa, txtData, txtParcelas;
 	JTextPane txtDesc;
 	MainController mController;
 
-	public SalvarDespesa(JTextField txtDespesa, JTextPane txtDesc, JTextField txtData, MainController mController) {
+	public SalvarDespesa(JTextField txtDespesa, JTextPane txtDesc, JTextField txtData, JTextField txtParcelas, MainController mController) {
 		this.txtDespesa = txtDespesa;
 		this.txtData = txtData;
 		this.txtDesc = txtDesc;
+		this.txtParcelas = txtParcelas;
 		this.mController = mController;
 	}
 
@@ -45,6 +46,8 @@ public class SalvarDespesa implements ActionListener {
 	private void limpaCampos() {
 		txtDesc.setText("");
 		txtDespesa.setText("");
+		txtParcelas.setText("");
+		
 	}
 
 	private Despesa novo() {
@@ -52,6 +55,7 @@ public class SalvarDespesa implements ActionListener {
 		despesa.setValor(Float.parseFloat(txtDespesa.getText()));
 		despesa.setData(txtData.getText());
 		despesa.setDescricao(txtDesc.getText());
+		despesa.setParcela(txtParcelas.getText().isEmpty() ? 0 : Integer.parseInt(txtParcelas.getText()) );
 		return despesa;
 	}
 

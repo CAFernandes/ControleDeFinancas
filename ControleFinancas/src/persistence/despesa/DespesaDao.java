@@ -20,11 +20,12 @@ public class DespesaDao implements iDespesaDao {
 	
 	@Override
 	public void salvar(Despesa despesa) throws SQLException {
-		String sql = "INSERT INTO despesa (valor, data_despesa, descricao) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO despesa (valor, data_despesa, descricao, parcela) VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = connection.prepareStatement(sql);
 		ps.setFloat(1, despesa.getValor());
 		ps.setString(2, despesa.getData());
 		ps.setString(3, despesa.getDescricao());
+		ps.setInt(4, despesa.getParcela());
 		ps.execute();
 		ps.close();
 	}

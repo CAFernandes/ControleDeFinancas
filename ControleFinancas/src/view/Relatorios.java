@@ -59,16 +59,29 @@ public class Relatorios extends JFrame {
 
 		btnVoltar.addActionListener(new Back(this));
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
+		DefaultTableModel modelRenda = new DefaultTableModel(new Object[][] {},
 				new String[] { "Valor", "Descri\u00E7\u00E3o", "Data" });
 
+		DefaultTableModel modelDespesa = new DefaultTableModel(new Object[][] {},
+				new String[] { "Valor", "Descri\u00E7\u00E3o", "Data", "Parcelas", "Valor Parcela" });
+
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(5, 89, 419, 130);
 		contentPane.add(scrollPane);
 		scrollPane.setVisible(true);
 
+		tblDespesa = new JTable();
+		tblDespesa.setModel(modelDespesa);
+		tblDespesa.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tblDespesa.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblDespesa.getColumnModel().getColumn(2).setPreferredWidth(120);
+		tblDespesa.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tblDespesa.getColumnModel().getColumn(4).setPreferredWidth(180);
+		scrollPane.setViewportView(tblDespesa);
+
 		tblRenda = new JTable();
-		tblRenda.setModel(model);
+		tblRenda.setModel(modelRenda);
 		tblRenda.getColumnModel().getColumn(0).setPreferredWidth(164);
 		tblRenda.getColumnModel().getColumn(1).setPreferredWidth(337);
 		tblRenda.getColumnModel().getColumn(2).setPreferredWidth(121);
@@ -76,14 +89,7 @@ public class Relatorios extends JFrame {
 
 		RelatoriosController rController = new RelatoriosController(tblRenda);
 		rController.tableRenda();
-
-		tblDespesa = new JTable();
-		tblDespesa.setModel(model);
-		tblDespesa.getColumnModel().getColumn(0).setPreferredWidth(164);
-		tblDespesa.getColumnModel().getColumn(1).setPreferredWidth(337);
-		tblDespesa.getColumnModel().getColumn(2).setPreferredWidth(121);
-		scrollPane.setViewportView(tblDespesa);
-
+		
 		RadioButtonController rdbtnController = new RadioButtonController(rdbtnRenda, rdbtnDespesas, tblRenda,
 				tblDespesa, scrollPane);
 		rdbtnRenda.addActionListener(rdbtnController);

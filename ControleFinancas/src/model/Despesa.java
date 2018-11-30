@@ -4,6 +4,7 @@ public class Despesa {
 	private float valor;
 	private String data;
 	private String descricao;
+	private int parcela;
 	
 	public float getValor() {
 		return valor;
@@ -27,5 +28,10 @@ public class Despesa {
 	public void setData(String data) {
 		this.data = data;
 	}
-	
+	public int getParcela() {
+		return parcela;
+	}
+	public void setParcela(int parcela) {
+		this.parcela = parcela;
+	}
 }

@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class RadioButtonController implements ActionListener {
 
 	JRadioButton rdbtnRenda, rdbtnDespesa;
 	JTable tblRenda, tblDespesa;
-	DefaultTableModel model;
 	JScrollPane scrollPane;
 	
 	public RadioButtonController(JRadioButton rdbtnRenda, JRadioButton rdbtnDespesa, JTable tblRenda, JTable tblDespesa, JScrollPane scrollPane) {

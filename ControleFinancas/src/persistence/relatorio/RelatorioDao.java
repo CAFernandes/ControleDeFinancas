@@ -24,7 +24,7 @@ public class RelatorioDao implements iRelatorioDao {
 	@Override
 	public List<Despesa> GerarRelatorioDespesa() throws SQLException {
 		List<Despesa> list = new ArrayList<Despesa>();
-		String sql = "SELECT valor, data_despesa, descricao FROM despesa ORDER BY data_despesa ASC";
+		String sql = "SELECT valor, data_despesa, descricao, parcela FROM despesa ORDER BY data_despesa ASC";
 		PreparedStatement ps = connection.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
@@ -32,6 +32,7 @@ public class RelatorioDao implements iRelatorioDao {
 			des.setValor(rs.getFloat("valor"));
 			des.setData(rs.getString("data_despesa"));
 			des.setDescricao(rs.getString("descricao"));
+			des.setParcela(rs.getInt("parcela"));
 			list.add(des);
 		}
 		return list;
